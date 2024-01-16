@@ -1,0 +1,38 @@
+CREATE TABLE product (
+   product_id int,
+   product_name varchar(100),
+   price double,
+   quantity int
+);
+select * from product;
+INSERT INTO product(product_id,product_name,price,quantity)
+value(2,'bo kho',30000,12),(3,'coca',10000,30),(4,'fanta',10000,13),(5,'sting',10000,13),(6,'lavie',10000,16),(7,'bo huc',15000,10),(8,'milo',8000,144),(9,'7up',10000,16),(10,'wakeup247',10000,20);
+alter table product
+add description varchar(100);
+SET SQL_SAFE_UPDATES = 0;
+update product
+set price = 99
+where product_id = 1;
+UPDATE Product
+SET price =price + (price * 0.1)
+WHERE product_id = 2;
+select * from person;
+
+update person
+set fullname = 'john doe'
+where id =10;
+update person
+set country = 'vietnam'
+where id = 3;
+update person
+set country = 'vietnam'
+where id = 40;
+update person
+set birthday = '1990-05-15'
+where id = 40;
+update person
+set salary = salary + (salary * 0.1)
+where id = 30;
+update person
+set salary = salary - (salary * 0.15)
+where salary >6000;

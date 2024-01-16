@@ -1,0 +1,52 @@
+-- cau1
+select distinct country
+from person;
+-- cau2
+select * from person
+order by fullname asc;
+-- cau 3
+select fullname,job
+from person
+order by job desc;
+-- cau 4
+SELECT DISTINCT job FROM Person;
+-- cau5
+SELECT SUM(salary) AS total_salary FROM Person;
+-- cau 6
+select country, count(*) as total_people
+from person
+group by country
+order by total_people desc;
+-- cau7
+select job,avg(salary)as avg_salary
+from person
+group by job
+order by avg_salary asc;
+-- cau8
+select fullname
+from person
+where salary>5000 and birthday between '1990-01-01'and'1995-12-31';
+-- cau9
+select fullname
+from person
+where salary>6000 and job = 'developer' or job = 'Engineer';
+-- cau10 
+select distinct job, count(*) as total_people
+from person
+group by job
+having total_people >3;
+-- cau 11
+select fullname
+from person
+where gender = 'M'
+order by salary desc
+limit 1;
+--  cau12
+select fullname
+where gender = 'F'
+order by salary asc
+limit 1;
+-- cau13
+select distinct fullname
+from person
+order by fullname asc;
