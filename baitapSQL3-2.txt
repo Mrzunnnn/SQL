@@ -1,0 +1,38 @@
+-- 1
+select distinct job 
+from person;
+-- 2
+select fullname
+from person
+where job = 'Manager' and salary >7000;
+
+-- 3
+select fullname
+from person
+where (YEAR(NOW()) - YEAR(birthday)) > 25 and (YEAR(NOW()) - YEAR(birthday))<35;
+
+--  4
+select country,count(*)as total_people 
+from person
+group by country;
+
+-- 5
+select gender,count(*) as total
+from person
+group by gender;
+
+-- 6
+select country,job, count(*) total
+from person
+group by country,job;
+
+-- 7
+select fullname,birthday
+from person
+order by birthday desc;
+
+-- 8
+select job , count(*) as total_people
+from person
+group by job
+having total_people >3;
