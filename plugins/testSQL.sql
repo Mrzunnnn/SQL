@@ -1,0 +1,122 @@
+create table categories(
+category_id int primary key auto_increment,
+category_name text
+)
+select* from categories;
+insert into categories(category_name)
+values('do an'),('nuoc uong'),('gia dung');
+
+
+create table product(
+product_id int primary key auto_increment,
+product_name text,
+category_id int,
+foreign key (category_id) REFERENCES categories(category_id),
+price double
+);
+select* from product;
+insert into product(product_name,category_id,price)
+values('banh mi',1,10000),('xuc xich bo',1,20000),('bim bim',1,9000),('cocacola',2,10000),('pepsi',2,10000),('panta',2,10000),('bot giat OMO',3,40000),('tam',3,2000),('dau an',3,55000);
+
+
+create table customer(
+customer_id int primary key auto_increment,
+customer_name text,
+customer_email text
+);
+select* from customer;
+insert into customer(customer_name,customer_email)
+values('Dung','dungtqk2001@gmail.com'),('hoang','hoangaac@gmail.com'),('trung','trungks@gmail.com'),('ha','nthaabn@gmail.com');
+
+create table orders(
+orders_id int primary key auto_increment,
+customer_id int,
+foreign key (customer_id) references customer(customer_id),
+orders_date date
+);
+select*from orders;
+insert into orders(customer_id,orders_date)
+values(1,'2023-01-23'),(1,'2024-01-23'),(1,'2024-01-24'),(1,'2024-01-24'),(2,'2024-01-18'),(2,'2024-01-02'),(2,'2023-12-22'),(3,'2024-01-02'),(3,'2024-01-06'),(3,'2024-01-12'),(4,'2024-01-22'),(4,'2023-12-23'),(4,'2024-11-21');
+
+create table OrderDetails(
+order_detail_id int primary key auto_increment,
+orders_id int,
+foreign key (orders_id) references orders(orders_id),
+product_id int,
+foreign key (product_id) references product(product_id),
+quantity int
+);
+select*from orderdetails;
+insert into orderdetails(orders_id,product_id,quantity)
+values(1,2,3),(2,3,4),(3,1,3),(4,3,5),(5,3,5),(6,3,4),(7,2,4),(8,3,2),(9,2,3),(10,2,4),(11,3,5),(12,2,4),(13,4,1);
+
+
+-- cau1
+select *
+from product
+inner join orderdetails on product.product_id = orderdetails.product_id;
+-- cau2
+select sum(price*quantity) as total
+from product
+inner join orderdetails on product.product_id = orderdetails.product_id
+where order_detail_id =2;
+-- cau 3
+-- select *
+-- from product
+-- inner join orderdetails on product.product_id = orderdetails.product_id
+-- where product_id is null; 
+
+-- cau 4
+select category_name ,count(*) as total_products
+from categories
+inner join product on categories.category_id = product.category_id
+group by category_name;
+
+-- cau 5
+select customer_name,sum(orderdetails.quantity) as total_quantily
+from customer
+inner join orders on customer.customer_id = orders.customer_id
+inner join orderdetails on orders.orders_id = orderdetails.orders_id
+group by customer_name;
+
+
+-- cau 6
+select product_name,price ,count(*) as product_count
+from product
+inner join categories on product.category_id = product.category_id
+group by product_name,price 
+order by product_count desc
+limit 1
+;
+
+-- cau7
+select category_name,sum(orderdetails.quantity) as total
+from categories
+inner join product on categories.category_id = product.category_id
+inner join orderdetails on product.product_id = orderdetails.product_id
+group by category_name;
+-- cau8
+select customer_name,sum(orderdetails.quantity) as total_quantily
+from customer
+inner join orders on customer.customer_id = orders.customer_id
+inner join orderdetails on orders.orders_id = orderdetails.orders_id
+group by customer_name
+order by total_quantily desc
+limit 3;
+-- cau 9 
+select customer_name,count(*) as total
+from customer
+inner join orders on customer.customer_id = orders.customer_id
+inner join orderdetails on orders.orders_id = orderdetails.orders_id
+group by customer_name
+having total>2
+;
+-- cau 10
+select product_name,sum(orderdetails.quantity) as total_quantily
+from product
+inner join orderdetails on product.product_id = orderdetails.product_id
+group by product_name
+order by total_quantily desc
+limit 1;
+
+
